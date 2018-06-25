@@ -29,10 +29,11 @@
         // Create an array of alphabetical characters used to label the markers.
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         // The map() method here has nothing to do with the Google Maps API.
-        var markers = kulikuli_stores.map(function(store, i) {
+        var markers = kulikuli_stores.features.map(function(store, i) {
+          var latLng = {lat: store.geometry.coordinates[1], lng: store.geometry.coordinates[0] }
           return new google.maps.Marker({
-            // position: location,
-            // label: labels[i % labels.length]
+            position: latLng,
+            label: store.properties.storeName,
           });
         });
         // Add a marker clusterer to manage the markers.
