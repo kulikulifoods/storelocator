@@ -26,6 +26,32 @@
           zoom: 2,
           center: {lat: 3.55851195, lng:178.7366199}
         });
+        // This example displays a marker at the center of Australia.
+// When the user clicks the marker, an info window opens.
+  var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">Whole Foods Market(Oakland)</h1>'+
+      '<div id="bodyContent">'+
+      '<p><b>WFM Oakland</b>, <br></br> <b>Address</b> <br></br> 456 West Lane Avenue' +
+      '<br></br> Oakland, CA 97848 <br></br>'+
+      'Carries Pure Moringa Powder, Smoothies and Energy Shots'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  var marker = new google.maps.Marker({
+    position: oakland,
+    map: map,
+    title: 'Whole Foods Market (Oakland)'
+  });
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+}
 
         // Create an array of alphabetical characters used to label the markers.
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -40,7 +66,6 @@
         // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-      }
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
