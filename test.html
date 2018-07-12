@@ -20,38 +20,27 @@
     <script src="stores.geojson"></script>
     <script>
       function kuliMap() {
-        var oakland = {lat:37.7583925, lng:-122.3754124 };
+        //var oakland = {lat:37.7583925, lng:-122.3754124 };
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 2,
-          center: {lat: 3.55851195, lng:178.7366199}
+          center: {lat: 3.55851195, lng:178.7366199},
         });
-        // This example displays a marker at the center of Australia.
-// When the user clicks the marker, an info window opens.
-  var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h1 id="firstHeading" class="firstHeading">Whole Foods Market(Oakland)</h1>'+
-      '<div id="bodyContent">'+
-      '<p><b>WFM Oakland</b>, <br></br> <b>Address</b> <br></br> 456 West Lane Avenue' +
-      '<br></br> Oakland, CA 97848 <br></br>'+
-      'Carries Pure Moringa Powder, Smoothies and Energy Shots'+
-      '</div>'+
-      '</div>';
+        var infoWindow = new google.maps.InfoWindow();
 
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
+        // Show the information for a store when its marker is clicked.
+        map.data.addListener('click', event => {
 
-  var marker = new google.maps.Marker({
-    position: oakland,
-    map: map,
-    title: 'Whole Foods Market (Oakland)'
-  });
-  marker.addListener('click', function() {
-    infowindow.open(map, marker);
-  });
-}
+          var category = event.feature.getProperty('category');
+          var name = event.feature.getProperty('name');
+          var description = event.feature.getProperty('description');
+          var hours = event.feature.getProperty('hours');
+          var phone = event.feature.getProperty('phone');
+          var position = event.feature.getGeometry().get();
+          infoWindow.setContent(content);
+          infoWindow.setPosition(position);
+          infoWindow.open(map);
+        });
 
         // Create an array of alphabetical characters used to label the markers.
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -66,6 +55,7 @@
         // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
     </script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
