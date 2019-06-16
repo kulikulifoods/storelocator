@@ -20,11 +20,26 @@
     <script src="stores.geojson"></script>
     <script>
       function kuliMap() {
-        var oakland = {lat:37.7583925, lng:-122.3754124 };
+        //var oakland = {lat:37.7583925, lng:-122.3754124 };
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 2,
-          center: {lat: 3.55851195, lng:178.7366199}
+          center: {lat: 3.55851195, lng:178.7366199},
+        });
+        var infoWindow = new google.maps.InfoWindow();
+
+        // Show the information for a store when its marker is clicked.
+        map.data.addListener('click', event => {
+
+          var category = event.feature.getProperty('category');
+          var name = event.feature.getProperty('name');
+          var description = event.feature.getProperty('description');
+          var hours = event.feature.getProperty('hours');
+          var phone = event.feature.getProperty('phone');
+          var position = event.feature.getGeometry().get();
+          infoWindow.setContent(content);
+          infoWindow.setPosition(position);
+          infoWindow.open(map);
         });
 
         // Create an array of alphabetical characters used to label the markers.
